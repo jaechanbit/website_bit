@@ -15,17 +15,16 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-white text-lg font-bold mb-4">연락처</h3>
             <p className="text-sm space-y-2">
-              <span className="block">전화: 02-1234-5678</span>
-              <span className="block">이메일: bitacademy@example.com</span>
-              <span className="block">주소: 서울특별시 미래구 디지털로 123 비트빌딩 3층</span>
+              <span className="block">전화: 063-626-9060</span>
+              <span className="block">이메일: anvicnw@gmail.com</span>
+              <span className="block">주소: 전북 남원시 의총로 81-10</span>
             </p>
           </div>
           <div>
             <h3 className="text-white text-lg font-bold mb-4">운영시간</h3>
             <p className="text-sm space-y-2">
-              <span className="block">평일: 09:00 ~ 21:00</span>
-              <span className="block">토요일: 10:00 ~ 17:00</span>
-              <span className="block">일요일/공휴일 휴무</span>
+              <span className="block">평일: 09:30 ~ 20:30</span>
+              <span className="block">토요일/일요일/공휴일 휴무</span>
             </p>
           </div>
         </div>
