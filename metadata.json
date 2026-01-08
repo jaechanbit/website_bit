@@ -1,0 +1,5 @@
+{
+  "name": "Bit Computer Academy",
+  "description": "A responsive SPA for Bit Computer Academy featuring curriculum details, government funding guides, and a simulated admin dashboard for managing notices and inquiries.",
+  "requestFramePermissions": []
+}
