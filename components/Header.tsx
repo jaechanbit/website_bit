@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, X, Monitor, Lock } from 'lucide-react';
+import { Menu, X, Lock } from 'lucide-react';
 
 interface HeaderProps {
   onAdminClick: () => void;
@@ -37,7 +37,11 @@ const Header: React.FC<HeaderProps> = ({ onAdminClick, isAdminMode }) => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center cursor-pointer" onClick={() => window.scrollTo(0, 0)}>
-            <Monitor className="h-8 w-8 text-brand-600 mr-2" />
+            <img 
+              src="/images/logo.png" 
+              alt="비트컴퓨터학원" 
+              className="h-10 w-auto mr-2 object-contain"
+            />
             <span className="font-bold text-xl text-gray-900 tracking-tight">비트컴퓨터학원</span>
           </div>
 
