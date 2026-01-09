@@ -44,7 +44,13 @@ const Curriculum: React.FC = () => {
         </div>
 
         {/* Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div 
+          className={`grid gap-6 ${
+            activeTab === 'national' 
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-2 max-w-5xl mx-auto' 
+              : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
+          }`}
+        >
           {CURRICULUM_DATA.find((c) => c.id === activeTab)?.items.map((item, index) => (
             <div
               key={index}

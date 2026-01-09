@@ -11,37 +11,14 @@ import AdminDashboard from './components/AdminDashboard';
 import { INITIAL_NOTICES } from './constants';
 import { Notice, Inquiry } from './types';
 
-// Background component to mimic the "Clear Technology" image
-const BackgroundShapes = () => (
-  <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none bg-[#020617]">
-    {/* Deep blue gradient base */}
-    <div className="absolute inset-0 bg-gradient-to-br from-[#020024] via-[#050A30] to-[#001233]"></div>
-    
-    {/* Abstract Geometric Shapes (Diagonal Pills) */}
-    {/* Large faint glow top right */}
-    <div className="absolute -top-[20%] -right-[10%] w-[800px] h-[1200px] bg-blue-900/20 rounded-full transform rotate-[35deg] blur-3xl"></div>
-    
-    {/* Solid-ish pill shape */}
-    <div className="absolute top-[10%] right-[5%] w-[180px] h-[600px] bg-gradient-to-b from-blue-600/10 to-blue-900/5 rounded-full transform rotate-[35deg] border border-blue-500/10 backdrop-blur-sm"></div>
-    
-    {/* Stroked pill shape */}
-    <div className="absolute top-[25%] right-[15%] w-[140px] h-[500px] border border-blue-400/20 rounded-full transform rotate-[35deg]"></div>
-    
-    {/* Bottom left glow */}
-    <div className="absolute -bottom-[20%] -left-[10%] w-[600px] h-[800px] bg-indigo-900/20 rounded-full transform rotate-[35deg] blur-3xl"></div>
-    
-    {/* Decorative line */}
-    <div className="absolute top-0 right-[30%] w-[1px] h-[100vh] bg-gradient-to-b from-transparent via-blue-500/20 to-transparent transform rotate-[35deg]"></div>
-  </div>
-);
-
 function App() {
   // Application State
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [notices, setNotices] = useState<Notice[]>(INITIAL_NOTICES);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
+  const [bannerContent, setBannerContent] = useState('📢 2024년 국비지원 과정 수강생 모집 중! 100% 전액 무료 교육 + 매월 훈련수당 지급 🎁 자격증 취득부터 취업까지 원스톱 지원!');
 
-  // Function to toggle admin mode - Password removed for immediate activation
+  // Function to toggle admin mode
   const handleAdminToggle = () => {
     setIsAdminMode(prev => !prev);
   };
@@ -68,29 +45,37 @@ function App() {
   };
 
   return (
-    <div className="font-sans text-gray-100 min-h-screen relative selection:bg-blue-500 selection:text-white">
-      <BackgroundShapes />
+    <div className="font-sans text-gray-900 min-h-screen relative selection:bg-brand-200 selection:text-brand-900">
       
       {isAdminMode ? (
-        <div className="relative z-10">
+        <div className="relative z-10 bg-gray-900">
           <AdminDashboard 
             notices={notices}
             inquiries={inquiries}
             onAddNotice={handleAddNotice}
             onDeleteNotice={handleDeleteNotice}
             onExit={() => setIsAdminMode(false)}
+            bannerContent={bannerContent}
+            onUpdateBanner={setBannerContent}
           />
         </div>
       ) : (
-        <div className="relative z-10">
-          <Header onAdminClick={handleAdminToggle} isAdminMode={isAdminMode} />
-          <main className="space-y-0">
-            <Hero />
+        <div className="relative z-10 flex flex-col min-h-screen">
+          <Header 
+            onAdminClick={handleAdminToggle} 
+            isAdminMode={isAdminMode} 
+          />
+          <main className="flex-grow">
+            <Hero bannerContent={bannerContent} />
             <About />
             <Curriculum />
             <FundingGuide />
-            <Community notices={notices} />
-            <Contact onInquirySubmit={handleInquirySubmit} />
+            <div className="bg-slate-900">
+                <Community notices={notices} />
+            </div>
+            <div className="bg-slate-900">
+                <Contact onInquirySubmit={handleInquirySubmit} />
+            </div>
           </main>
           <Footer />
         </div>

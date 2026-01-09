@@ -24,6 +24,7 @@ const Footer: React.FC = () => {
             <h3 className="text-white text-lg font-bold mb-4">운영시간</h3>
             <p className="text-sm space-y-2">
               <span className="block">평일: 09:30 ~ 20:30</span>
+              
               <span className="block">토요일/일요일/공휴일 휴무</span>
             </p>
           </div>

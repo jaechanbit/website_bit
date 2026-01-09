@@ -70,7 +70,7 @@ const Contact: React.FC<ContactProps> = ({ onInquirySubmit }) => {
             </div>
             <div className="mt-12 md:mt-0 relative z-10">
               <p className="text-sm text-blue-200">
-                운영시간: 평일 09:30 - 20:30<br/>
+                운영시간: 평일 09:00 - 21:00<br/>
                 (주말/공휴일 휴무)
               </p>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Notice, Inquiry } from '../types';
-import { Trash2, Plus, MessageSquare, Bell, ArrowLeft } from 'lucide-react';
+import { Trash2, Plus, MessageSquare, Bell, ArrowLeft, Settings, Save } from 'lucide-react';
 
 interface AdminDashboardProps {
   notices: Notice[];
@@ -8,6 +8,8 @@ interface AdminDashboardProps {
   onAddNotice: (notice: Omit<Notice, 'id'>) => void;
   onDeleteNotice: (id: number) => void;
   onExit: () => void;
+  bannerContent: string;
+  onUpdateBanner: (content: string) => void;
 }
 
 const AdminDashboard: React.FC<AdminDashboardProps> = ({ 
@@ -15,10 +17,13 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
   inquiries, 
   onAddNotice, 
   onDeleteNotice,
-  onExit
+  onExit,
+  bannerContent,
+  onUpdateBanner
 }) => {
-  const [activeTab, setActiveTab] = useState<'inquiries' | 'notices'>('inquiries');
+  const [activeTab, setActiveTab] = useState<'inquiries' | 'notices' | 'settings'>('inquiries');
   const [newNotice, setNewNotice] = useState({ title: '', content: '' });
+  const [tempBannerContent, setTempBannerContent] = useState(bannerContent);
 
   const handleAddNotice = (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,6 +35,11 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
       date: new Date().toISOString().split('T')[0]
     });
     setNewNotice({ title: '', content: '' });
+  };
+
+  const handleSaveBanner = () => {
+    onUpdateBanner(tempBannerContent);
+    alert('배너 내용이 업데이트되었습니다.');
   };
 
   return (
@@ -69,6 +79,17 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
           >
             <Bell className="w-4 h-4 mr-2" />
             공지사항 관리 ({notices.length})
+          </button>
+          <button
+            onClick={() => setActiveTab('settings')}
+            className={`flex-1 py-3 text-center text-sm font-bold rounded-lg transition-all flex items-center justify-center ${
+              activeTab === 'settings' 
+                 ? 'bg-blue-600 text-white shadow-lg shadow-blue-900/50' 
+                : 'text-gray-400 hover:text-white hover:bg-white/5'
+            }`}
+          >
+            <Settings className="w-4 h-4 mr-2" />
+            사이트 설정
           </button>
         </div>
 
@@ -175,6 +196,42 @@ const AdminDashboard: React.FC<AdminDashboardProps> = ({
                     등록하기
                   </button>
                 </form>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 'settings' && (
+            <div className="max-w-3xl mx-auto">
+              <h2 className="text-xl font-bold mb-6 text-white flex items-center">
+                <Settings className="w-5 h-5 mr-2 text-blue-400" />
+                사이트 설정
+              </h2>
+              
+              <div className="bg-white/5 border border-white/10 rounded-xl p-8">
+                <div className="mb-6">
+                  <label className="block text-lg font-bold text-white mb-2">
+                    메인 배너 문구 (광고)
+                  </label>
+                  <p className="text-sm text-gray-400 mb-4">
+                    홈 화면 하단에 슬라이딩되는 광고 문구를 설정합니다.
+                  </p>
+                  <input
+                    type="text"
+                    value={tempBannerContent}
+                    onChange={(e) => setTempBannerContent(e.target.value)}
+                    className="w-full bg-black/20 border border-white/10 rounded-lg p-4 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500/50 text-lg"
+                    placeholder="배너 내용을 입력하세요..."
+                  />
+                </div>
+                <div className="flex justify-end">
+                  <button
+                    onClick={handleSaveBanner}
+                    className="flex items-center px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 font-bold transition-all shadow-lg shadow-blue-900/20"
+                  >
+                    <Save className="w-5 h-5 mr-2" />
+                    저장하기
+                  </button>
+                </div>
               </div>
             </div>
           )}
