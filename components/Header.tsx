@@ -40,7 +40,7 @@ const Header: React.FC<HeaderProps> = ({ onAdminClick, isAdminMode }) => {
             className="flex items-center"
           >
             <img 
-              src="/logo.png" 
+              src="logo.png" 
               alt="비트컴퓨터학원" 
               className="h-10 w-auto mr-2 object-contain"
             />
