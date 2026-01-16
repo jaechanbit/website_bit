@@ -1,6 +1,8 @@
+'use client';
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { Course, Notice, Consultation, ConsultationTarget } from '../types';
-import { NATIONAL_COURSES, STUDENT_COURSES, MOCK_NOTICES } from '../constants';
+import { Course, Notice, Consultation } from '@/lib/types';
+import { NATIONAL_COURSES, STUDENT_COURSES, MOCK_NOTICES } from '@/lib/constants';
 
 interface DataContextType {
   nationalCourses: Course[];
@@ -20,43 +22,50 @@ interface DataContextType {
 const DataContext = createContext<DataContextType | undefined>(undefined);
 
 export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize state from localStorage or constants
-  const [nationalCourses, setNationalCourses] = useState<Course[]>(() => {
-    const saved = localStorage.getItem('nationalCourses');
-    return saved ? JSON.parse(saved) : NATIONAL_COURSES;
-  });
+  // Initialize with default constants to avoid hydration mismatch during SSR
+  const [nationalCourses, setNationalCourses] = useState<Course[]>(NATIONAL_COURSES);
+  const [studentCourses, setStudentCourses] = useState<Course[]>(STUDENT_COURSES);
+  const [notices, setNotices] = useState<Notice[]>(MOCK_NOTICES);
+  const [consultations, setConsultations] = useState<Consultation[]>([]);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  const [studentCourses, setStudentCourses] = useState<Course[]>(() => {
-    const saved = localStorage.getItem('studentCourses');
-    return saved ? JSON.parse(saved) : STUDENT_COURSES;
-  });
-
-  const [notices, setNotices] = useState<Notice[]>(() => {
-    const saved = localStorage.getItem('notices');
-    return saved ? JSON.parse(saved) : MOCK_NOTICES;
-  });
-
-  const [consultations, setConsultations] = useState<Consultation[]>(() => {
-    const saved = localStorage.getItem('consultations');
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  // Save to localStorage whenever state changes
+  // Load from localStorage only on client-side
   useEffect(() => {
+    const savedNational = localStorage.getItem('nationalCourses');
+    if (savedNational) setNationalCourses(JSON.parse(savedNational));
+
+    const savedStudent = localStorage.getItem('studentCourses');
+    if (savedStudent) setStudentCourses(JSON.parse(savedStudent));
+
+    const savedNotices = localStorage.getItem('notices');
+    if (savedNotices) setNotices(JSON.parse(savedNotices));
+
+    const savedConsultations = localStorage.getItem('consultations');
+    if (savedConsultations) setConsultations(JSON.parse(savedConsultations));
+    
+    setIsInitialized(true);
+  }, []);
+
+  // Save to localStorage whenever state changes (only after initialization)
+  useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem('nationalCourses', JSON.stringify(nationalCourses));
-  }, [nationalCourses]);
+  }, [nationalCourses, isInitialized]);
 
   useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem('studentCourses', JSON.stringify(studentCourses));
-  }, [studentCourses]);
+  }, [studentCourses, isInitialized]);
 
   useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem('notices', JSON.stringify(notices));
-  }, [notices]);
+  }, [notices, isInitialized]);
 
   useEffect(() => {
+    if (!isInitialized) return;
     localStorage.setItem('consultations', JSON.stringify(consultations));
-  }, [consultations]);
+  }, [consultations, isInitialized]);
 
   const updateCourse = (updatedCourse: Course) => {
     if (updatedCourse.target === 'NATIONAL') {

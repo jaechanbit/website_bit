@@ -28,3 +28,19 @@ export interface Review {
   rating: number;
   date: string;
 }
+
+export enum ConsultationTarget {
+  NATIONAL = '국비지원(국민내일배움카드)',
+  STUDENT = '초·중·고 학생',
+}
+
+export interface Consultation {
+  id: string;
+  name: string;
+  phone: string;
+  course: string;
+  target: ConsultationTarget | string;
+  message: string;
+  date: string;
+  status: 'PENDING' | 'COMPLETED';
+}
