@@ -1,5 +1,6 @@
 import React from 'react';
-import { APP_NAME, ADDRESS, CONTACT_PHONE } from '../constants';
+import Link from 'next/link';
+import { APP_NAME, ADDRESS, CONTACT_PHONE } from '@/lib/constants';
 
 const Footer: React.FC = () => {
   return (
@@ -25,17 +26,17 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="text-white text-base font-bold mb-4">바로가기</h3>
             <ul className="space-y-2 text-sm">
-              <li><a href="#/course/national" className="hover:text-white transition-colors">국민내일배움카드 과정</a></li>
-              <li><a href="#/course/student" className="hover:text-white transition-colors">초·중·고 교육과정</a></li>
-              <li><a href="#/consultation" className="hover:text-white transition-colors font-bold text-brand-blue">상담신청</a></li>
+              <li><Link href="/course/national" className="hover:text-white transition-colors">국민내일배움카드 과정</Link></li>
+              <li><Link href="/course/student" className="hover:text-white transition-colors">초·중·고 교육과정</Link></li>
+              <li><Link href="/consult" className="hover:text-white transition-colors font-bold text-brand-blue">상담신청</Link></li>
             </ul>
           </div>
         </div>
         <div className="border-t border-slate-800 mt-10 pt-6 text-xs text-slate-500 flex flex-col md:flex-row justify-between items-center">
           <p className="text-center md:text-left mb-2 md:mb-0">
-            &copy; {new Date().getFullYear()} {APP_NAME}. All rights reserved. 본 홈페이지는 포트폴리오용으로 제작되었습니다.
+            &copy; {new Date().getFullYear()} {APP_NAME}. All rights reserved.
           </p>
-          <a href="#/admin" className="text-slate-700 hover:text-slate-500 transition-colors">관리자</a>
+          <Link href="/admin" className="text-slate-700 hover:text-slate-500 transition-colors">관리자</Link>
         </div>
       </div>
     </footer>

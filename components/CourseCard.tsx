@@ -1,6 +1,6 @@
 import React from 'react';
-import { Course, PagePath } from '../types';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
+import { Course } from '@/lib/types';
 
 interface CourseCardProps {
   course: Course;
@@ -9,7 +9,7 @@ interface CourseCardProps {
 const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow border border-slate-100 flex flex-col h-full">
-      <div className="h-48 overflow-hidden">
+      <div className="h-48 overflow-hidden relative bg-gray-200">
         <img 
           src={course.image} 
           alt={course.title} 
@@ -28,7 +28,7 @@ const CourseCard: React.FC<CourseCardProps> = ({ course }) => {
         <p className="text-slate-600 text-sm mb-4 line-clamp-2">{course.description}</p>
         <div className="mt-auto pt-4 border-t border-slate-100">
           <Link 
-            to={PagePath.CONSULTATION} 
+            href="/consult" 
             className="block w-full text-center bg-brand-navy text-white py-2 rounded font-medium hover:bg-blue-800 transition-colors"
           >
             상담 신청하기
